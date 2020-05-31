@@ -1,44 +1,53 @@
-import React, { Component } from 'react'
-// import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import Button from "react-bootstrap/Button";
 
 export class CrawlItem extends Component {
-    getStyle=()=>{
-        return {
-            textDecoration:this.props.item.active ? 'none' : 'line-through',
-            background: '#f4f4f4',
-            borderBottom: '1px #ccc dotted',
-            padding: '10px'
-        }
-    }
 
-    render() {
-        const {_id, url, active} = this.props.item;
-        return (
-            <div style={this.getStyle()}>
-                <p>
-                    <input type="checkbox" checked={active==="true" ? true : false} onChange={this.props.toggleActive.bind(this, _id)}
-                    />{' '}
-                    {url}
-                    <button onClick={this.props.delUrl.bind(this, _id)} style={btnStyle}>x</button>
-                </p>
-            </div>
-        )
-    }
+  getStyle = () => {
+    return {
+      textDecoration: this.props.item.active ? "none" : "line-through",
+      display: "inline-block",
+      cursor: "pointer",
+      float: "left",
+    };
+  };
+
+  handleToggle(_id) {
+    this.props.toggleUrl(_id);
+  }
+
+  handleDel(_id) {
+    this.props.delUrl(_id);
+  }
+
+  render() {
+    const { _id, url, active } = this.props.item;
+    return (
+      <div style={divStyle}>
+        <p style={this.getStyle()} onClick={this.handleToggle.bind(this, _id)}>
+          {url}
+        </p>
+        <Button
+          variant="dark"
+          onClick={this.handleDel.bind(this, _id)}
+          style={btnStyle}
+        >
+          Delete
+        </Button>
+      </div>
+    );
+  }
 }
-
-// PropTypes
-// TodoItem.propTypes = {
-//     todo: PropTypes.object.isRequired
-// }
 
 const btnStyle = {
-    background: '#ff0000',
-    color: '#fff',
-    border: 'none',
-    padding: '5px 10px',
-    borderRadius: '50%',
-    cursor: 'pointer',
-    float: 'right'
-}
+  display: "inline-block",
+  cursor: "pointer",
+  float: "right",
+};
 
-export default CrawlItem
+const divStyle = {
+  height: "60px",
+  padding: "10px",
+};
+
+export default CrawlItem;
