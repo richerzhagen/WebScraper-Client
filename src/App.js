@@ -1,24 +1,17 @@
 import React, { Component } from "react";
-// import logo from './logo.svg';
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import ChildComponent from "./ChildComponent";
+import ListGroup from "react-bootstrap/ListGroup";
 import CrawlList from "./CrawlList";
 import AddUrl from "./AddUrl";
 import SideBar from "./SideBar";
-import ListGroup from "react-bootstrap/ListGroup";
-import HomeIcon from "@material-ui/icons/Home";
-import ReceiptIcon from "@material-ui/icons/Receipt";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import DesktopWindowsIcon from "@material-ui/icons/DesktopWindows";
-import SettingsIcon from "@material-ui/icons/Settings";
+import { SideBarItems } from "./SideBarJson";
+// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-// import NavBar from "./Navbar";
 class App extends Component {
   constructor(props) {
     super(props);
-
-    
 
     this.state = {
       ws: null,
@@ -103,7 +96,6 @@ class App extends Component {
         )} second.`,
         e.reason
       );
-
       that.timeout = that.timeout + that.timeout; //increment retry interval
       connectInterval = setTimeout(this.check, Math.min(10000, that.timeout)); //call check function after timeout
     };
@@ -157,72 +149,58 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div style={leftStyle}>
-          <SideBar items={items}/>
+      <Router>
+        <div className="App">
+          <div style={leftStyle}>
+            <SideBar items={SideBarItems} />
+          </div>
+          <Switch>
+            <Route path="/about">{/* <About /> */}</Route>
+            <Route path="/tweetslist">
+              <NavigateTweetsList />
+            </Route>
+            <Route path="/scrapelist">
+              <NavigateCrawlList
+                addUrl={this.addUrl}
+                toCrawl={this.state.toCrawl}
+                toggleUrl={this.toggleUrl}
+                delUrl={this.delUrl}
+              />
+            </Route>
+          </Switch>
         </div>
-        <div style={rightStyle}>
-          <AddUrl addUrl={this.addUrl} />
-          <ListGroup as="ul">
-            <CrawlList
-              toCrawl={this.state.toCrawl}
-              toggleUrl={this.toggleUrl}
-              delUrl={this.delUrl}
-            />
-          </ListGroup>
+      </Router>
+    );
+  }
+}
 
-          {/* <ChildComponent websocket={this.state.ws} /> */}
-        </div>
+class NavigateCrawlList extends Component {
+  render() {
+    return (
+      <div style={rightStyle}>
+        <AddUrl addUrl={this.props.addUrl} />
+        <ListGroup as="ul">
+          <CrawlList
+            toCrawl={this.props.toCrawl}
+            toggleUrl={this.props.toggleUrl}
+            delUrl={this.props.delUrl}
+          />
+        </ListGroup>
+        {/* <ChildComponent websocket={this.state.ws} /> */}
       </div>
     );
   }
 }
 
-function onClick(e, item) {
-  window.alert(JSON.stringify(item, null, 2));
-}
-
-const items = [
-  { name: "home", label: "Home", Icon: HomeIcon },"divider",
-  {
-    name: "billing",
-    label: "Billing",
-    Icon: ReceiptIcon,
-    items: [
-      { name: "statements", label: "Statements", onClick },
-      { name: "reports", label: "Reports", onClick }
-    ]
-  },
-  "divider",
-  {
-    name: "settings",
-    label: "Settings",
-    Icon: SettingsIcon,
-    items: [
-      { name: "profile", label: "Profile" },
-      { name: "insurance", label: "Insurance", onClick },
-      "divider",
-      {
-        name: "notifications",
-        label: "Notifications",
-        Icon: NotificationsIcon,
-        items: [
-          { name: "email", label: "Email", onClick },
-          {
-            name: "desktop",
-            label: "Desktop",
-            Icon: DesktopWindowsIcon,
-            items: [
-              { name: "schedule", label: "Schedule" },
-              { name: "frequency", label: "Frequency" }
-            ]
-          },
-          { name: "sms", label: "SMS" }
-        ]
-      }
-    ]
+class NavigateTweetsList extends Component {
+  render() {
+    return (
+      <div style={rightStyle}>
+        <h3 style={{color: "#ffffff"}}>tweetslist</h3>
+      </div>
+    );
   }
-];
+}
 
 const leftStyle = {
   height: "100%",
@@ -237,7 +215,7 @@ const leftStyle = {
 };
 
 const rightStyle = {
-  marginLeft: "160px", 
+  marginLeft: "160px",
   fontSize: "28px",
   padding: "0px 10px",
 };
