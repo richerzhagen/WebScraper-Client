@@ -3,6 +3,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import CrawlList from "./CrawlList";
+import TweetList from "./TweetList";
 import AddUrl from "./AddUrl";
 import SideBar from "./SideBar";
 import { SideBarItems } from "./SideBarJson";
@@ -16,6 +17,24 @@ class App extends Component {
     this.state = {
       ws: null,
       toCrawl: [],
+      tweets: [
+        {
+          _id:0,
+          author:"donald trump",
+          content:"i am the president",
+          likes: "2",
+          favourites: "0",
+          retweets: "1"
+        },
+        {
+          _id:1,
+          author:"donald trump",
+          content:"look at me",
+          likes: "4",
+          favourites: "1",
+          retweets: "2"
+        },
+      ],
     };
   }
 
@@ -142,24 +161,24 @@ class App extends Component {
 
   render() {
     return (
-        <div className="App">
-          <div style={leftStyle}>
-            <SideBar items={SideBarItems} />
-          </div>
-          <Switch>
-            <Route path="/tweetslist">
-              <NavigateTweetsList />
-            </Route>
-            <Route path="/scrapelist">
-              <NavigateCrawlList
-                addUrl={this.addUrl}
-                toCrawl={this.state.toCrawl}
-                toggleUrl={this.toggleUrl}
-                delUrl={this.delUrl}
-              />
-            </Route>
-          </Switch>
+      <div className="App">
+        <div style={leftStyle}>
+          <SideBar items={SideBarItems} />
         </div>
+        <Switch>
+          <Route path="/tweetslist">
+            <NavigateTweetsList tweets={this.state.tweets} />
+          </Route>
+          <Route path="/scrapelist">
+            <NavigateCrawlList
+              addUrl={this.addUrl}
+              toCrawl={this.state.toCrawl}
+              toggleUrl={this.toggleUrl}
+              delUrl={this.delUrl}
+            />
+          </Route>
+        </Switch>
+      </div>
     );
   }
 }
@@ -185,7 +204,10 @@ class NavigateTweetsList extends Component {
   render() {
     return (
       <div style={rightStyle}>
-        <h3 style={{color: "#ffffff"}}>tweetslist</h3>
+        <h3 style={{ color: "#ffffff" }}>tweetslist</h3>
+        <ListGroup as="ul">
+          <TweetList tweets={this.props.tweets} />
+        </ListGroup>
       </div>
     );
   }
@@ -201,6 +223,7 @@ const leftStyle = {
   backgroundColor: "#222222",
   overflowX: "hidden",
   paddingTop: "20px",
+  borderRight: "1px solid #2f2f2f",
 };
 
 const rightStyle = {
