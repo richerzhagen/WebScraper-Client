@@ -5,6 +5,7 @@ import Divider from "@material-ui/core/Divider";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Collapse from "@material-ui/core/Collapse";
+import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 
 function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
   const [collapsed, setCollapsed] = React.useState(true);
@@ -101,4 +102,4 @@ function Sidebar({ items, depthStep, depth, expanded }) {
   );
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);

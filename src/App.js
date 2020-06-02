@@ -152,6 +152,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <div style={leftStyle}>
+          {/* <Route path='/path' component={SideBar} /> */}
             <SideBar items={SideBarItems} />
           </div>
           <Switch>

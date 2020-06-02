@@ -3,17 +3,17 @@ import ReceiptIcon from "@material-ui/icons/Receipt";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import DesktopWindowsIcon from "@material-ui/icons/DesktopWindows";
 import SettingsIcon from "@material-ui/icons/Settings";
-
+// import  { Redirect } from 'react-router-dom'
+import history from './history';
 function onClick(e, item) {
-  // window.alert(JSON.stringify(item, null, 2));
-  console.log(window.location.origin);
-  console.log(item);
-  if(item.name==="/"){
-    window.location.replace(window.location.origin+"/scrapelist");
-  }
-  else{
-    window.location.replace(window.location.origin+"/"+item.name);
-  }
+
+  history.push(item.name);
+  // if(item.name==="/"){
+  //   window.location.replace(window.location.origin+"/scrapelist");
+  // }
+  // else{
+  //   window.location.replace(window.location.origin+"/"+item.name);
+  // }
 }
 
 export const SideBarItems = [
@@ -24,8 +24,8 @@ export const SideBarItems = [
     label: "Tweets",
     Icon: ReceiptIcon,
     items: [
-      { name: "scrapelist", label: "Scrapelist", onClick },
-      { name: "tweetslist", label: "Tweetslist", onClick },
+      { name: "/scrapelist", label: "Scrapelist", onClick },
+      { name: "/tweetslist", label: "Tweetslist", onClick },
     ],
   },
   "divider",
