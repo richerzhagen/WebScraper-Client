@@ -8,7 +8,7 @@ import { Router, Route } from 'react-router-dom';
 import history from './history';
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
      <Router history={history}>
       <div>
         {/* <ul>
@@ -16,15 +16,18 @@ ReactDOM.render(
           <li><Link to="/login">Login</Link></li>
         </ul> */}
         
-        <Route exact path="/" component={App} />
+        {/* <Route exact path="/" component={App} />
         <Route exact path="/home" component={App} />
         <Route path="/login" component={App} />
         <Route path="/scrapelist" component={App} />
-        <Route path="/tweetslist" component={App} />
+        <Route path="/tweetslist" component={App} /> */}
+        
+        <Route path="/" component={App} />
       </div>
-    </Router>
-    {/* <App /> */}
-  </React.StrictMode>,
+    </Router>,
+ //   {/* <App /> */}
+  // </React.StrictMode>
+  
   document.getElementById('root')
 );
 

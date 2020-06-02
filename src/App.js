@@ -7,7 +7,7 @@ import AddUrl from "./AddUrl";
 import SideBar from "./SideBar";
 import { SideBarItems } from "./SideBarJson";
 // import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -26,10 +26,7 @@ class App extends Component {
 
   timeout = 250; // Initial timeout duration as a class variable
 
-  /**
-   * @function connect
-   * This function establishes the connect with the websocket and also ensures constant reconnection if connection closes
-   */
+  // This function establishes the connect with the websocket and also ensures constant reconnection if connection closes
   connect = () => {
     var ws = new WebSocket("ws://localhost:3000/ws");
     let that = this; // cache the this
@@ -47,8 +44,6 @@ class App extends Component {
 
     //to receive the message from server
     ws.onmessage = function (e) {
-      // console.log("Server: " + e.data);
-
       var data = JSON.parse(e.data);
       console.log(data);
 
@@ -112,9 +107,7 @@ class App extends Component {
     };
   };
 
-  /**
-   * utilited by the @function connect to check if the connection is close, if so attempts to reconnect
-   */
+  // reconnect if connection gets closed
   check = () => {
     const { ws } = this.state;
     if (!ws || ws.readyState === WebSocket.CLOSED) this.connect(); //check if websocket instance is closed, if so call `connect` function.
@@ -149,14 +142,11 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
         <div className="App">
           <div style={leftStyle}>
-          {/* <Route path='/path' component={SideBar} /> */}
             <SideBar items={SideBarItems} />
           </div>
           <Switch>
-            <Route path="/about">{/* <About /> */}</Route>
             <Route path="/tweetslist">
               <NavigateTweetsList />
             </Route>
@@ -170,7 +160,6 @@ class App extends Component {
             </Route>
           </Switch>
         </div>
-      </Router>
     );
   }
 }
@@ -187,7 +176,6 @@ class NavigateCrawlList extends Component {
             delUrl={this.props.delUrl}
           />
         </ListGroup>
-        {/* <ChildComponent websocket={this.state.ws} /> */}
       </div>
     );
   }
